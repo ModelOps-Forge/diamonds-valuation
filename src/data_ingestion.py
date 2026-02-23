@@ -23,7 +23,7 @@ DATA_DIR_PRO = BASE_DIR / 'data' / 'processed'
 DATA_DIR_PRO.mkdir(parents=True, exist_ok=True)
 
 # Semilla para reproduccion
-SEED = 42
+SEED = 123
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     """Logica de limpieza tecnica y tipado inicial."""
