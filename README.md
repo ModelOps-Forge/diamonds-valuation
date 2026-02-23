@@ -1,13 +1,6 @@
-# 💎 Diamond Valuation Engine
-> **Machine Learning Regression Pipeline for Diamond Pricing.**
-
-Este proyecto aplica técnicas avanzadas de regresión para estimar el valor de mercado de diamantes basándose en sus atributos físicos. Está diseñado bajo principios de **ingeniería de software**, priorizando la modularidad, la mantenibilidad y la reproducibilidad del experimento.
-
----
-
 ## 🏗️ Estructura del Proyecto
 
-
+```text
 ├── data/           # Datasets originales y procesados.
 ├── notebooks/      # Análisis exploratorio (EDA) y prototipado.
 ├── src/            # Código fuente modular (limpieza, ingeniería, entrenamiento).
@@ -15,6 +8,7 @@ Este proyecto aplica técnicas avanzadas de regresión para estimar el valor de 
 ├── tests/          # Pruebas unitarias para validación de datos.
 └── requirements.txt # Dependencias del proyecto.
 
+```
 
 ## 🛠️ Pipeline de Ingeniería
 
@@ -64,5 +58,3 @@ python src/train_model.py
 ---
 
 **Desarrollado con rigor técnico en [ModelOps-Forge**](https://github.com/ModelOps-Forge)
-
-```
