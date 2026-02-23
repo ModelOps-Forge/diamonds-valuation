@@ -10,6 +10,17 @@
 
 ```
 
+## 📊 Data Source
+
+Los datasets utilizados en este proyecto provienen de la competición de Kaggle:
+* **Competición:** [CEUPE - Big Data Analytics](https://www.kaggle.com/competitions/ceupe-big-data-analytics)
+* **Dataset:** 
+- `diamonds_train.csv` (conjunto para entrenamiento incluido en la sección de data de la competición).
+- `diamonds_test.csv`
+- `sample_submission.csv` 
+> **Nota:** Debido a las políticas de Kaggle y al peso de los archivos, los datos crudos no se encuentran en este repositorio. Deben descargarse manualmente y colocarse en `data/raw/`.
+
+
 ## 🛠️ Pipeline de Ingeniería
 
 A diferencia de un análisis convencional, este repositorio implementa un flujo de trabajo estructurado:
