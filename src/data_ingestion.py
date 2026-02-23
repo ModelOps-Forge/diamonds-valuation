@@ -6,30 +6,30 @@ import pandas as pd
 import pyarrow as pa
 import sys
 
-# Configuración de logs para trazabilidad
+# Configuracion de logs para trazabilidad
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-# ruta del directorio de datos
+# Ruta del directorio de datos
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / 'data' / 'raw'
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-# ruta del directorio de datos procesados
+# Ruta del directorio de datos procesados
 DATA_DIR_PRO = BASE_DIR / 'data' / 'processed'
 DATA_DIR_PRO.mkdir(parents=True, exist_ok=True)
 
-# semilla para reproduccion
+# Semilla para reproduccion
 SEED = 42
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
-    """Lógica de limpieza técnica y tipado inicial."""
+    """Logica de limpieza tecnica y tipado inicial."""
     logging.info("Iniciando limpieza tecnica y renombrado...")
     
-    # 1. Renombrar
+    # Renombrar
     new_names = {
         'carat': 'quilate', 'cut': 'corte', 'color': 'color', 
         'clarity': 'claridad', 'depth': 'profundidad', 'table': 'tabla', 
@@ -37,16 +37,20 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     }
     df = df.rename(columns=new_names)
 
-    # 2. Duplicados
+    # Duplicados
+    initial_rows = len(df)
     df = df.drop_duplicates()
+    rows_lost = initial_rows - len(df)
+    if rows_lost > 0:
+        logging.warning(f"Se eliminaron {rows_lost} filas duplicadas.")
 
-    # 3. Dimensiones válidas
+    # Dimensiones validas
     mask_invalid = (df[['x', 'y', 'z']].isna().any(axis=1)) | (df[['x', 'y', 'z']] <= 0).any(axis=1)
     if mask_invalid.any():
-        logging.warning(f"Eliminando {mask_invalid.sum()} filas con dimensiones inválidas.")
+        logging.warning(f"Eliminando {mask_invalid.sum()} filas con dimensiones invalidas.")
         df = df.loc[~mask_invalid].copy()
 
-    # 4. Tipado optimizado (Ingeniería de memoria)
+    # Tipado optimizado
     cols_numeric_float = ['quilate', 'profundidad', 'tabla', 'x', 'y', 'z']
     df[cols_numeric_float] = df[cols_numeric_float].astype('float32')
     df['precio'] = df['precio'].astype('int32')
