@@ -25,6 +25,34 @@ DATA_DIR_PRO.mkdir(parents=True, exist_ok=True)
 # semilla para reproduccion
 SEED = 42
 
+def clean_data(df: pd.DataFrame) -> pd.DataFrame:
+    """Lógica de limpieza técnica y tipado inicial."""
+    logging.info("Iniciando limpieza tecnica y renombrado...")
+    
+    # 1. Renombrar
+    new_names = {
+        'carat': 'quilate', 'cut': 'corte', 'color': 'color', 
+        'clarity': 'claridad', 'depth': 'profundidad', 'table': 'tabla', 
+        'price': 'precio', 'x': 'x', 'y': 'y', 'z': 'z'
+    }
+    df = df.rename(columns=new_names)
+
+    # 2. Duplicados
+    df = df.drop_duplicates()
+
+    # 3. Dimensiones válidas
+    mask_invalid = (df[['x', 'y', 'z']].isna().any(axis=1)) | (df[['x', 'y', 'z']] <= 0).any(axis=1)
+    if mask_invalid.any():
+        logging.warning(f"Eliminando {mask_invalid.sum()} filas con dimensiones inválidas.")
+        df = df.loc[~mask_invalid].copy()
+
+    # 4. Tipado optimizado (Ingeniería de memoria)
+    cols_numeric_float = ['quilate', 'profundidad', 'tabla', 'x', 'y', 'z']
+    df[cols_numeric_float] = df[cols_numeric_float].astype('float32')
+    df['precio'] = df['precio'].astype('int32')
+    
+    return df
+
 def run_ingestion():
     """Prepara el dataset de diamantes (CSV) y lo guarda en Parquet con tipos fijos."""
     # Ruta al CSV de entrada (fall-back si cambia el nombre)
@@ -35,6 +63,9 @@ def run_ingestion():
 
     logging.info("Iniciando ingesta de datos...")
     diamonds_df = pd.read_csv(url_data, low_memory=False)
+
+    # Aplicar limpieza
+    diamonds_df = clean_data(diamonds_df)
 
     logging.info("Realizando division de datos (80/20)...")
     train_df, test_df = train_test_split(diamonds_df, test_size=0.2, random_state=SEED)
