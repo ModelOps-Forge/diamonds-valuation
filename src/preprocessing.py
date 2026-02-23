@@ -48,15 +48,23 @@ def run_preprocessing():
     X_train_transformed = preprocessor.fit_transform(train_df.drop(columns=['precio']))
     X_test_transformed = preprocessor.transform(test_df.drop(columns=['precio']))
 
+    # Convertir de nuevo a DataFrame para guardar como Parquet
+    # Usamos las columnas que resultan del preprocesador
+    all_cols = cols_numeric + cols_categoric
+
+    train_processed = pd.DataFrame(X_train_transformed, columns=all_cols)
+    train_processed['precio'] = train_df['precio'].values # Añadir target
+    
+    test_processed = pd.DataFrame(X_test_transformed, columns=all_cols)
+    test_processed['precio'] = test_df['precio'].values # Añadir target
+
+    # Guardar ambos archivos
+    train_processed.to_parquet(DATA_DIR / 'train_preprocessed.parquet', index=False)
+    test_processed.to_parquet(DATA_DIR / 'test_preprocessed.parquet', index=False)
+
     # Guardar el objeto preprocessor para la prediccion manual
     joblib.dump(preprocessor, MODEL_DIR / 'preprocessor.joblib')
-    
-    # Guardar los datos transformados para el entrenamiento
-    train_processed = pd.DataFrame(X_train_transformed)
-    train_processed['precio'] = train_df['precio'].values # Recuperamos el target
-    
-    train_processed.to_parquet(DATA_DIR / 'train_preprocessed.parquet', index=False)
-    logging.info("Preprocesador guardado y datos listos para el entrenamiento.")
+    logging.info("Archivos train y test preprocesados guardados correctamente.")
 
 if __name__ == "__main__":
     run_preprocessing()
