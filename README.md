@@ -26,10 +26,10 @@ Los datasets utilizados en este proyecto provienen de la competición de Kaggle:
 
 A diferencia de un análisis convencional, este repositorio implementa un flujo de trabajo estructurado:
 
-1. **Data Cleaning:** Tratamiento de *outliers* en dimensiones críticas () y manejo de valores inconsistentes en profundidad y tabla.
+1. **Data Cleaning:** Tratamiento de *outliers* en dimensiones críticas (x, y, z) y manejo de valores inconsistentes en profundidad y tabla.
 2. **Feature Engineering:** Codificación de variables categóricas (*Cut, Color, Clarity*) utilizando mapeos ordinales para capturar la jerarquía de calidad.
 3. **Modeling:** Evaluación comparativa entre regresión lineal múltiple y modelos basados en ensamble (*Random Forest*).
-4. **Validation:** Implementación de *Cross-Validation* para mitigar el sobreajuste (*overfitting*) y asegurar la generalización.
+4. **Validation:** División de datos mediante Hold-out para una evaluación inicial, con planes de implementar K-Fold Cross-Validation durante la fase de optimización de hiperparámetros.
 
 ## 📊 Métricas de Rendimiento
 
@@ -37,9 +37,34 @@ El modelo final se evalúa bajo las siguientes métricas de regresión:
 
 | Métrica | Descripción | Valor obtenido |
 | --- | --- | --- |
-| **R² Score** | Coeficiente de determinación | `0.XX` |
-| **RMSE** | Root Mean Square Error | `$X,XXX` |
-| **MAE** | Mean Absolute Error | `$X,XXX` |
+| **R² Score** | Coeficiente de determinación | `0.98` |
+| **RMSE** | Root Mean Square Error | `$526.24` |
+| **MAE** | Mean Absolute Error | `$264.95` |
+
+## 🧠 Conclusiones y Hallazgos
+
+* **Poder Predictivo:** El modelo alcanza un **R2 de 0.98**, lo que demuestra que las características físicas de los diamantes ( y quilates) tienen una relación matemática casi lineal-exponencial con el precio de mercado.
+* **Análisis de Error:** El **MAE de $264.95** indica una alta precisión para el rango medio de precios. Sin embargo, la diferencia con el **RMSE ($526.24)** sugiere que el modelo enfrenta mayores dificultades con los *outliers* (diamantes de extrema rareza o precios muy elevados), donde la variabilidad es mayor.
+* **Eficiencia del Pipeline:** Gracias a la arquitectura modular y el uso de formatos **Parquet**, el ciclo completo desde la ingesta hasta la evaluación se ejecuta en menos de 10 segundos, permitiendo una iteración rápida para experimentos de *Fine-tuning*.
+* **Jerarquía Ordinal:** La codificación manual de la calidad (*Cut, Color, Clarity*) resultó ser superior a una codificación simple, confirmando que respetar el conocimiento de dominio del sector joyero mejora la estabilidad del modelo.
+
+A continuación se presentan los resultados visuales de la evaluación del modelo:
+
+### Comparativa: Real vs. Predicho
+Este gráfico muestra la alta correlación entre las predicciones y los valores reales. La alineación con la diagonal confirma un $R^2$ de 0.98.
+![Real vs Predicho](reports/figures/real_vs_predicho.png)
+
+### Distribución de Residuales
+La simetría de los errores alrededor del cero indica que el modelo es insesgado, aunque las colas del histograma reflejan la presencia de valores atípicos en diamantes de alto valor.
+![Distribución de Errores](reports/figures/distribucion_errores.png)
+
+
+## Próximos Pasos
+
+* [ ] Implementación de optimización de hiperparámetros con **Optuna**.
+* [ ] Creación de una API con **FastAPI** para servir el modelo.
+* [ ] Desarrollo de una interfaz de usuario en **Streamlit**.
+
 
 ## 🚀 Instalación y Uso
 
