@@ -206,9 +206,9 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Ignorar todos los CSVs en data
-data/raw/*.csv
-data/procesed/*.csv
+# Ignorar todos los CSVs y Parquet en data
+data/**/*.csv
+data/**/*.parquet
 
 # Pero NO ignorar los archivos Markdown que explican qué hacer
 !data/**/README.md
