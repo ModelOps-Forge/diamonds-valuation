@@ -6,6 +6,7 @@
 ├── src/            # Código fuente modular (limpieza, ingeniería, entrenamiento).
 ├── models/         # Modelos serializados (archivos .pkl o .h5).
 ├── tests/          # Pruebas unitarias para validación de datos.
+├── main.py         # Orquestador principal
 └── requirements.txt # Dependencias del proyecto.
 
 ```
@@ -58,9 +59,9 @@ pip install -r requirements.txt
 ```
 
 
-3. **Ejecutar el pipeline (Proóximamente):**
+3. **Ejecutar el pipeline:**
 ```bash
-python src/train_model.py
+python main.py
 
 ```
 
