@@ -6,24 +6,27 @@ import pandas as pd
 import pyarrow as pa
 import sys
 
+# Configuración de logs para trazabilidad
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+# ruta del directorio de datos
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / 'data' / 'raw'
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+# ruta del directorio de datos procesados
+DATA_DIR_PRO = BASE_DIR / 'data' / 'processed'
+DATA_DIR_PRO.mkdir(parents=True, exist_ok=True)
+
+# semilla para reproduccion
+SEED = 42
 
 def run_ingestion():
     """Prepara el dataset de diamantes (CSV) y lo guarda en Parquet con tipos fijos."""
-    # Configuración de logs para trazabilidad
-    logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
-
-    # ruta del directorio de datos
-    BASE_DIR = Path(__file__).resolve().parent.parent
-    DATA_DIR = BASE_DIR / 'data' / 'raw'
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-    # ruta del directorio de datos procesados
-    DATA_DIR_PRO = BASE_DIR / 'data' / 'processed'
-    DATA_DIR_PRO.mkdir(parents=True, exist_ok=True)
-
-    # semilla para reproduccion
-    SEED = 42
-
     # Ruta al CSV de entrada (fall-back si cambia el nombre)
     url_data = DATA_DIR / 'diamonds_train.csv'
     if not url_data.exists():
