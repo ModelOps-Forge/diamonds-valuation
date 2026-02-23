@@ -3,6 +3,7 @@ import sys
 from src.data_ingestion import run_ingestion
 
 # from src.feature_engineering import run_feature_engineering
+from src.preprocessing import run_preprocessing
 
 logging.basicConfig(
     level=logging.INFO,
@@ -20,8 +21,8 @@ def main():
         logging.info("Etapa 2: Feature Engineering... [PENDIENTE]")
         # run_feature_engineering()
         # 3. Preprocesamiento
-        logging.info("Etapa 3: Preprocesamiento... [PENDIENTE]")
-        # run_preprocessing()
+        logging.info("Etapa 3: Preprocesamiento...")
+        run_preprocessing()
         # 4. Optimizacion o Tuneo
         logging.info("Etapa 4: Optimizacion... [PENDIENTE]")
         # run_tuning()
