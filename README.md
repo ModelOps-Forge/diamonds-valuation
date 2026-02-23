@@ -5,8 +5,8 @@
 ├── notebooks/      # Análisis exploratorio (EDA) y prototipado.
 ├── src/            # Código fuente modular (limpieza, ingeniería, entrenamiento).
 ├── models/         # Modelos serializados (archivos .pkl o .h5).
-├── tests/          # Pruebas unitarias para validación de datos.
-├── main.py         # Orquestador principal
+├── main.py         # Orquestador principal (Entrenamiento)
+├── inference.py    # Consumo del modelo (Prediccion)
 └── requirements.txt # Dependencias del proyecto.
 
 ```
@@ -43,7 +43,7 @@ El modelo final se evalúa bajo las siguientes métricas de regresión:
 
 ## 🧠 Conclusiones y Hallazgos
 
-* **Poder Predictivo:** El modelo alcanza un **R2 de 0.98**, lo que demuestra que las características físicas de los diamantes ( y quilates) tienen una relación matemática casi lineal-exponencial con el precio de mercado.
+* **Poder Predictivo:** El modelo alcanza un **R² de 0.98**, lo que demuestra que las características físicas de los diamantes (x, y, z y quilates) tienen una relación matemática casi lineal-exponencial con el precio de mercado.
 * **Análisis de Error:** El **MAE de $264.95** indica una alta precisión para el rango medio de precios. Sin embargo, la diferencia con el **RMSE ($526.24)** sugiere que el modelo enfrenta mayores dificultades con los *outliers* (diamantes de extrema rareza o precios muy elevados), donde la variabilidad es mayor.
 * **Eficiencia del Pipeline:** Gracias a la arquitectura modular y el uso de formatos **Parquet**, el ciclo completo desde la ingesta hasta la evaluación se ejecuta en menos de 10 segundos, permitiendo una iteración rápida para experimentos de *Fine-tuning*.
 * **Jerarquía Ordinal:** La codificación manual de la calidad (*Cut, Color, Clarity*) resultó ser superior a una codificación simple, confirmando que respetar el conocimiento de dominio del sector joyero mejora la estabilidad del modelo.
@@ -90,6 +90,45 @@ python main.py
 
 ```
 
+## 💡 Uso del Modelo (Inferencia)
+
+Una vez ejecutado el pipeline y generados los artefactos en `/models`, puede utilizar el script de inferencia para tasar diamantes individuales:
+
+```python
+# Ejemplo rápido dentro de inference.py
+nuevo_diamante = {
+    'quilate': 1.2,
+    'corte': 'Premium',
+    'color': 'G',
+    'claridad': 'VS2',
+    'profundidad': 62.0,
+    'tabla': 58.0,
+    'x': 6.8, 'y': 6.8, 'z': 4.2
+}
+
+```
+Para ejecutar una prueba:
+```python
+python inference.py
+```
+
+=============================================
+ 💎 RESUMEN DE TASACIÓN DE DIAMANTE 💎 
+=============================================
+CARACTERÍSTICA       | VALOR               
+---------------------------------------------
+Quilate              | 0.7                 
+Corte                | Ideal               
+Color                | E                   
+Claridad             | SI1                 
+Profundidad          | 61.5                
+Tabla                | 55.0                
+X                    | 5.72                
+Y                    | 5.75                
+Z                    | 3.52                
+---------------------------------------------
+PRECIO ESTIMADO:     | $2,824.09 USD
+=============================================
 
 
 ---
