@@ -213,3 +213,7 @@ data/**/*.parquet
 # Pero NO ignorar los archivos Markdown que explican qué hacer
 !data/**/README.md
 !data/**/.gitkeep
+
+# Modelos y artefactos (Binarios)
+models/*.joblib
+models/*.pkl

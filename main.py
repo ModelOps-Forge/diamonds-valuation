@@ -4,6 +4,7 @@ from src.data_ingestion import run_ingestion
 
 # from src.feature_engineering import run_feature_engineering
 from src.preprocessing import run_preprocessing
+from src.model_training import run_training
 
 logging.basicConfig(
     level=logging.INFO,
@@ -28,8 +29,8 @@ def main():
         # run_tuning()
         ### Los parametros no se asignan automatico
         # 5. Entrenamiento
-        logging.info("Etapa 5: Entrenamiento... [PENDIENTE]")
-        # run_training()
+        logging.info("Etapa 5: Entrenamiento...")
+        run_training()
         # 6. Evaluacion
         logging.info("Etapa 6: Evaluacion... [PENDIENTE]")
         # run_evaluation()
