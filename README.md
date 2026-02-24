@@ -110,7 +110,6 @@ nuevo_diamante = {
 Para ejecutar una prueba:
 ```python
 python inference.py
-```
 
 =============================================
  💎 RESUMEN DE TASACIÓN DE DIAMANTE 💎 
@@ -129,8 +128,7 @@ Z                    | 3.52
 ---------------------------------------------
 PRECIO ESTIMADO:     | $2,824.09 USD
 =============================================
-
-
+```
 ---
 
 **Desarrollado con rigor técnico en [ModelOps-Forge**](https://github.com/ModelOps-Forge)
