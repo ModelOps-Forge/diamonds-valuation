@@ -72,8 +72,24 @@ Para replicar este entorno de ingeniería, siga estos pasos:
 
 1. **Clonar el repositorio:**
 ```bash
-git clone [https://github.com/ModelOps-Forge/diamonds-valuation.git](https://github.com/ModelOps-Forge/diamonds-valuation.git)
+git clone https://github.com/ModelOps-Forge/diamonds-valuation.git
 
+```
+
+2. **Crear y activar un entorno virtual::**
+```bash
+- En Windows:
+
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+- En macOS/Linux:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
 ```
 
 
