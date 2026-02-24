@@ -92,15 +92,14 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-
-2. **Instalar dependencias:**
+3. **Instalar dependencias:**
 ```bash
 pip install -r requirements.txt
 
 ```
 
 
-3. **Ejecutar el pipeline:**
+4. **Ejecutar el pipeline:**
 ```bash
 python main.py
 
