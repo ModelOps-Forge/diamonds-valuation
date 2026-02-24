@@ -77,7 +77,7 @@ git clone https://github.com/ModelOps-Forge/diamonds-valuation.git
 ```
 
 2. **Crear y activar un entorno virtual::**
-```bash
+
 - En Windows:
 
 ```bash
